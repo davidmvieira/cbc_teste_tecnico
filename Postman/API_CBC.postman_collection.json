@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "fe4f2d8a-980c-4aa8-8729-e37151ea2d1c",
+		"name": "API_CBC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17552350"
+	},
+	"item": [
+		{
+			"name": "Listar todos os clubes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8989/api/clubes/",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"api",
+						"clubes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar clubes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clube\":\"Clube n\",\r\n    \"saldo_disponivel\":\"500,00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8989/api/clubes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"api",
+						"clubes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consumir recursos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"clube_id\":\"1\",\r\n\"recurso_id\":\"1\",\r\n\"valor_consumo\":\"500,00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8989/api/consumo",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"api",
+						"consumo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

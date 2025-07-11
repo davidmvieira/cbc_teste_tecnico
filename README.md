@@ -1,79 +1,43 @@
+Como configurar o projeto:
+- Requisitos:
+    - Docker 
 
-# Setup Docker Para Projetos Laravel (8, 9, 10 ou 11)
-[Assine a Academy, e Seja VIP!](https://academy.especializati.com.br)
+Após clonar projeto, na raiz devemos executar o comando:
 
-### Passo a passo
-Clone Repositório
-```sh
-git clone https://github.com/especializati/setup-docker-laravel.git
-```
+    cp .env.docker .env
 
-Clone os Arquivos do Laravel
-```sh
-git clone https://github.com/laravel/laravel.git app-laravel
-```
+Logo após, execute este proximo comando para criar o .env do Laravel 
 
+    cp src/.env.laravel src/.env
 
-Copie os arquivos docker-compose.yml, Dockerfile e o diretório docker/ para o seu projeto
-```sh
-cp -rf setup-docker-laravel/* app-laravel/
-```
-```sh
-cd app-laravel/
-```
+Se necessário, ajuste as variáveis para a criação do ambiente.
+Volte à raiz do projeto e execute o comando para subir os containers do projeto, com o comando:
 
+    docker-compose up -d
 
-Crie o Arquivo .env
-```sh
-cp .env.example .env
-```
+Logo após concluir o build acesse o container, usando
 
+    docker-compose exec app bash
 
-Atualize as variáveis de ambiente do arquivo .env
-```dosini
-APP_NAME="Especializa Ti"
-APP_URL=http://localhost:8989
+Para que possamos instalar as dependências do projeto
 
-DB_CONNECTION=mysql
-DB_HOST=db
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=root
+    composer install
 
-CACHE_DRIVER=redis
-QUEUE_CONNECTION=redis
-SESSION_DRIVER=redis
+E ainda dentro do container gerar a key do projeto Laravel
 
-REDIS_HOST=redis
-REDIS_PASSWORD=null
-REDIS_PORT=6379
-```
+    php artisan key:generate
 
+Se, não houver nenhuma alteração o projeto estará acessivel em:
+[http://localhost:8989]
 
-Suba os containers do projeto
-```sh
-docker-compose up -d
-```
+Ainda no container executar:
 
+    php artisan migrate
 
-Acessar o container
-```sh
-docker-compose exec app bash
-```
+ele deve perguntar se deseja criar o DB aceite assim as tabelas serão criadas no banco 
+e agora vamos popular a tabela:
 
+    php artisan db:seed
 
-Instalar as dependências do projeto
-```sh
-composer install
-```
-
-
-Gerar a key do projeto Laravel
-```sh
-php artisan key:generate
-```
-
-
-Acessar o projeto
-[http://localhost:8989](http://localhost:8989)
+pronto, agora nossa api já pode ser testada, 
+na raiz do projeto possui uma pasta POSTMAN, onde consta as rotas configuradas para serem utilizadas.
