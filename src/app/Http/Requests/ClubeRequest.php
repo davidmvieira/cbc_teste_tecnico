@@ -22,8 +22,8 @@ class ClubeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'clube' => ['required|string'],
-            'saldo_disponivel' => ['required', 'regex:/^\d{1,3}(\.\d{3})*(,\d{2})?$/'],
+            'clube' => ['required','string'],
+            'saldo_disponivel' => ['required'],
         ];
 
     }

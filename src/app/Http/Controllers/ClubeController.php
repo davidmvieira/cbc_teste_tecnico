@@ -17,13 +17,13 @@ class ClubeController extends Controller
     public function store(ClubeRequest $request)
     {
         $data = $request->validated();
-
+        
         try{
             $clube = Clube::create([
                 'clube' => $data['clube'],
                 'saldo_disponivel' => (float) str_replace(',', '.', $data['saldo_disponivel']),
             ]);
-            return response()->json($clube, 200);
+            return response()->json('ok', 200);
 
         } catch (\Exception $e) {
 

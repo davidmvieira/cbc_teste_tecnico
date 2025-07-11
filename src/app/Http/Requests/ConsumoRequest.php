@@ -22,9 +22,9 @@ class ConsumoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'clube_id' => 'required|exists:clubes,id',
-            'recurso_id' => 'required|exists:recursos,id',
-            'valor_consumo' => 'required', 'regex:/^\d{1,3}(\.\d{3})*(,\d{2})?$/'
+            'clube_id' => ['required'],
+            'recurso_id' => ['required'],
+            'valor_consumo' => ['required']
         ];
     }
     public function messages(): array

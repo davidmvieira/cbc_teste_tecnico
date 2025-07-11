@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Clube;
+use App\Models\Recurso;
+use App\Http\Requests\ConsumoRequest;
 class ConsumoController extends Controller
 {
     public function consumir(ConsumoRequest $request)
@@ -11,24 +13,30 @@ class ConsumoController extends Controller
         
         try {
             $clube = Clube::find($request->input('clube_id'));
-            $recursos = Consumo::find($request->input('recursos_id'));
-            $consumo_previsto = str_replace(['.', ','], ['', '.'], $request->valor_consumo);
+            $recursos = Recurso::find($request->input('recurso_id'));
+            $consumo_previsto = (float)str_replace(['.', ','], ['', '.'], $request->valor_consumo);
+            $recurso_clube = (float)str_replace(['.', ','], ['', '.'],$clube->saldo_disponivel) ;            
 
-            if( $clube->saldo_disponivel < $consumo_previsto) {
+            if( $recurso_clube < $consumo_previsto) {
                 return response()->json(['error' => 'O saldo disponível do clube é insuficiente.'], 400);
             }
 
             $saldo_anterior = $clube->saldo_disponivel;
-            $clube->saldo_disponivel -= $consumo_previsto;
-            $recursos->saldo_disponivel -= $consumo_previsto;
+            $novo_saldo_clube = $recurso_clube - $consumo_previsto;
+            $recurso_total =  $recursos->saldo_disponivel ;
+            $recurso_final = $recurso_total - $consumo_previsto;
 
-            $clube->save();
-            $recursos->save();
+            $clube->update([
+                'saldo_disponivel' => $novo_saldo_clube,
+            ]);
+            $recursos->update(
+                ['saldo_disponivel' => $recurso_final]
+            );
 
             return response()->json([
                 'clube' => $clube->clube,
-                'saldo_anterior' => number_format($saldo_anterior, 2, ',', '.'),
-                'novo_saldo' => number_format($clube->saldo_disponivel, 2, ',', '.'),
+                'saldo_anterior' => $saldo_anterior,
+                'novo_saldo' => $novo_saldo_clube,
             ], 200);
             
         } catch (\Exception $e) {
