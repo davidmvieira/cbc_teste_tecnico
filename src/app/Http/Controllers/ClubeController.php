@@ -20,7 +20,7 @@ class ClubeController extends Controller
 
         try{
             $clube = Clube::create([
-                'nome' => $data['clube'],
+                'clube' => $data['clube'],
                 'saldo_disponivel' => (float) str_replace(',', '.', $data['saldo_disponivel']),
             ]);
             return response()->json($clube, 200);

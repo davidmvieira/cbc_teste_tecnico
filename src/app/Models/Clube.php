@@ -9,7 +9,7 @@ class Clube extends Model
     protected $table = 'clube';
 
     protected $fillable = [
-        'nome',
+        'clube',
         'saldo_disponivel',
     ];
     protected $hidden = [

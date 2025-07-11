@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('clube', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->string('clube');
             $table->decimal('saldo_disponivel', 10, 2);
             $table->timestamps();
         });

@@ -22,9 +22,18 @@ class ClubeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'clube' => 'required|string',
-            'saldo_disponivel' => 'required',
+            'clube' => ['required|string'],
+            'saldo_disponivel' => ['required', 'regex:/^\d{1,3}(\.\d{3})*(,\d{2})?$/'],
         ];
 
+    }
+    public function messages(): array
+    {
+        return [
+            'clube.required' => 'O campo clube é obrigatório.',
+            'clube.string' => 'O campo clube deve ser uma string.',
+            'saldo_disponivel.required' => 'O campo saldo disponível é obrigatório.',
+            'saldo_disponivel.regex' => 'O saldo disponível deve ser um número válido com até duas casas decimais.',
+        ];
     }
 }
