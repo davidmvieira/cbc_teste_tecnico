@@ -12,5 +12,18 @@ class Clube extends Model
         'nome',
         'saldo_disponivel',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+    public function getSaldoDisponivelAttribute($value)
+    {
+        return number_format($value, 2, ',', '.');
+    }
+    public function setSaldoDisponivelAttribute($value)
+    {
+        $this->attributes['saldo_disponivel'] = str_replace(',', '.', str_replace('.', '', $value));
+    }
 
 }
